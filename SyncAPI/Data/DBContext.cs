@@ -15,6 +15,7 @@ namespace SyncAPI.Data
         }
 
         public DbSet<SyncIdentifier> SyncIdentifiers { get; set; }
+        public DbSet<Precio> Precios { get; set; }
         public DbSet<Articulo> Articulos { get; set; }
     }
 }

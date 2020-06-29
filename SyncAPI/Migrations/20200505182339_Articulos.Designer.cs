@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyncAPI.Data;
 
 namespace SyncAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20200505182339_Articulos")]
+    partial class Articulos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,15 +73,6 @@ namespace SyncAPI.Migrations
                     b.Property<string>("CodigoPereira")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DESCRIPCIONRubro")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DESCRIPCIONSeccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DESCRIPCIONTipoUnidad")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
@@ -92,64 +85,64 @@ namespace SyncAPI.Migrations
                     b.Property<string>("DescripcionWeb")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("ExistenciaActual")
+                    b.Property<decimal>("ExistenciaActual")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("ExistenciaInicial")
+                    b.Property<decimal>("ExistenciaInicial")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("ExistenciaMinima")
+                    b.Property<decimal>("ExistenciaMinima")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("FechaExistenciaInicial")
+                    b.Property<DateTime>("FechaExistenciaInicial")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("FechaUltimaCompra")
+                    b.Property<DateTime>("FechaUltimaCompra")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Grados")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<short?>("IDMoneda")
+                    b.Property<short>("IDMoneda")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("IDMonedaOriginal")
+                    b.Property<short>("IDMonedaOriginal")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("IDProveedorUltimaCompra")
+                    b.Property<short>("IDProveedorUltimaCompra")
                         .HasColumnType("smallint");
 
                     b.Property<int>("IDRubro")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IDRubroFranquicia")
+                    b.Property<int>("IDRubroFranquicia")
                         .HasColumnType("int");
 
                     b.Property<Guid>("IDSyncIdentifier")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<short?>("IDVendedor")
+                    b.Property<short>("IDVendedor")
                         .HasColumnType("smallint");
 
-                    b.Property<int?>("IdArticuloTransformado")
+                    b.Property<int>("IdArticuloTransformado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdArticuloTransformadoCC")
+                    b.Property<int>("IdArticuloTransformadoCC")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdDeposito")
+                    b.Property<int>("IdDeposito")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdFamiliaItemsOrigen")
+                    b.Property<int>("IdFamiliaItemsOrigen")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdTipoTicket")
+                    b.Property<int>("IdTipoTicket")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsAVentaFinal")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsLista4")
+                    b.Property<bool>("IsLista4")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsObligaVencimientoLote")
@@ -179,76 +172,13 @@ namespace SyncAPI.Migrations
                     b.Property<decimal>("PesoEspecifico")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("Porcentaje10")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje6")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje7")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje8")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Porcentaje9")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("PorcentajeIVA")
                         .HasColumnType("decimal(6, 2)");
-
-                    b.Property<decimal>("PorcentajeMarcacion")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PorcentajeMarcacionDos")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PorcentajeMarcacionTres")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PreNombreLegal")
                         .HasColumnType("varchar(450)");
 
-                    b.Property<decimal>("Precio01")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio02")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio03")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio04")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio05")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio06")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio07")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio08")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio09")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Precio10")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PrecioCosto")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PrecioEnOtraMoneda")
+                    b.Property<decimal>("PrecioEnOtraMoneda")
                         .HasColumnType("decimal(18, 4)");
 
                     b.Property<decimal>("PrecioFranquicia")
@@ -257,16 +187,13 @@ namespace SyncAPI.Migrations
                     b.Property<decimal>("PrecioPromocionFranquicia")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("PrecioUltimaCompra")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("ReporteDefault")
                         .HasColumnType("varchar(500)");
 
                     b.Property<string>("Ubicacion")
                         .HasColumnType("varchar(300)");
 
-                    b.Property<decimal?>("UltimoPrecio")
+                    b.Property<decimal>("UltimoPrecio")
                         .HasColumnType("decimal(18, 4)");
 
                     b.Property<decimal>("Volumen")
@@ -275,16 +202,16 @@ namespace SyncAPI.Migrations
                     b.Property<int>("diasVencimiento")
                         .HasColumnType("int");
 
-                    b.Property<int?>("fechaServicioDesde")
+                    b.Property<int>("fechaServicioDesde")
                         .HasColumnType("int");
 
-                    b.Property<int?>("fechaServicioHasta")
+                    b.Property<int>("fechaServicioHasta")
                         .HasColumnType("int");
 
-                    b.Property<int?>("idMedida")
+                    b.Property<int>("idMedida")
                         .HasColumnType("int");
 
-                    b.Property<int?>("idTipoUnidad")
+                    b.Property<int>("idTipoUnidad")
                         .HasColumnType("int");
 
                     b.Property<bool>("isContenedor")
@@ -311,10 +238,10 @@ namespace SyncAPI.Migrations
                     b.Property<bool>("isRetornable")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("isSeguirStock")
+                    b.Property<bool>("isSeguirStock")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("isServicio")
+                    b.Property<bool>("isServicio")
                         .HasColumnType("bit");
 
                     b.Property<bool>("isSubido")
@@ -334,14 +261,8 @@ namespace SyncAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
                     b.Property<string>("CodigoPereira")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaActualizacion")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("IDSyncIdentifier")
                         .HasColumnType("uniqueidentifier");

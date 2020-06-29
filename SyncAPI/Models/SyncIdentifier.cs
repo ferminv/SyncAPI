@@ -11,6 +11,7 @@ namespace SyncAPI.Models
         public String Nombre { get; set; }
         public DateTime UltimaFechaActualizacion { get; set; }
 
+        public ICollection<Precio> Precios { get; set; }
         public ICollection<Articulo> Articulos { get; set; }
     }
 }
