@@ -33,7 +33,6 @@ namespace SyncAPI.Controllers
         public async Task<ActionResult<SyncIdentifier>> GetSyncIdentifier(Guid id)
         {
             var syncIdentifier = await _context.SyncIdentifiers.FindAsync(id);
-
             if (syncIdentifier == null)
             {
                 return NotFound();

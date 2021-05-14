@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,13 @@ namespace SyncAPI
         {
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
 
+            services.AddDbContext<ComITDBContext>((serviceProvider, dbContextBuilder) =>
+            {
+                var connectionStringPlaceHolder = Configuration.GetConnectionString("ComITDBContext");
+                var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+                var connectionString = httpContextAccessor.HttpContext.Request.Headers["stringConnection"].First(); ;
+                dbContextBuilder.UseSqlServer(connectionString);
+            });
 
             services.AddControllers();
         }
