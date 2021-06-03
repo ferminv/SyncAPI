@@ -39,8 +39,6 @@ namespace SyncAPI.Controllers
         }
 
         // POST: api/Articulos
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<Articulo>> PostArticulo(Articulo articulo)
         {
@@ -51,8 +49,6 @@ namespace SyncAPI.Controllers
         }
 
         // PUT: api/Articulos/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArticulo(int id, Articulo articulo)
         {
@@ -213,6 +209,36 @@ namespace SyncAPI.Controllers
         {
             for (int i = 0; i < lista.Count; i += tamañoSubListas)
                 yield return lista.GetRange(i, Math.Min(tamañoSubListas, lista.Count - i));
+        }
+
+        //SINCRONIZACION DE IMAGENES
+        // POST: api/Articulos/MultiplesArticulos
+        [HttpPost]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<Imagen>> Imagenes(Guid idSyncIdentifier, IEnumerable<Imagen> imagenes)
+        {
+            EliminarImagenes(idSyncIdentifier);
+
+            _context.Imagenes.AddRange(imagenes);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private void EliminarImagenes(Guid idSyncIdentifier)
+        {
+            _context.Database.ExecuteSqlRaw("DELETE TOP(100) PERCENT FROM dbo.Imagenes WHERE IDSyncIdentifier = {0}", idSyncIdentifier);
+            _context.SaveChangesAsync();
+        }
+
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<IEnumerable<Imagen>>> Imagenes(Guid idSyncIdentifier)
+        {
+            var imagenes = await _context.Imagenes.Where(x => x.IDSyncIdentifier == idSyncIdentifier).ToListAsync();
+
+            return Ok(imagenes);
         }
     }
 }

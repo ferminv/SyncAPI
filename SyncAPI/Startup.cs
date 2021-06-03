@@ -30,20 +30,24 @@ namespace SyncAPI
         {
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
 
-            services.AddDbContext<ComITDBContext>((serviceProvider, dbContextBuilder) =>
-            {
-                var connectionStringPlaceHolder = Configuration.GetConnectionString("ComITDBContext");
-                var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-                var connectionString = httpContextAccessor.HttpContext.Request.Headers["stringConnection"].First(); ;
-                dbContextBuilder.UseSqlServer(connectionString);
-            });
+            //services.AddDbContext<ComITDBContext>((serviceProvider, dbContextBuilder) =>
+            //{
+            //    var connectionStringPlaceHolder = Configuration.GetConnectionString("ComITDBContext");
+            //    var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+            //    var connectionString = httpContextAccessor.HttpContext.Request.Headers["stringConnection"].First(); ;
+            //    dbContextBuilder.UseSqlServer(connectionString);
+            //});
+
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DBContext dataContext)
         {
+            dataContext.Database.Migrate(); //MAGIA MAGICA HERMOSA
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
