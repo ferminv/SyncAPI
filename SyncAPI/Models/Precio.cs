@@ -11,6 +11,7 @@ namespace SyncAPI.Models
     {
         public Int32 Id { get; set; } 
         public String CodigoPereira { get; set; }
+        public String Descripcion { get; set; }
         [Column(TypeName = "decimal(18, 4)")]
         public Decimal PrecioCosto { get; set; }
         [Column(TypeName = "decimal(18, 4)")]
