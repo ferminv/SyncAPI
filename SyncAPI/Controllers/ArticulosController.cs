@@ -213,6 +213,7 @@ namespace SyncAPI.Controllers
 
         //SINCRONIZACION DE IMAGENES
         // POST: api/Articulos/MultiplesArticulos
+        [DisableRequestSizeLimit]
         [HttpPost]
         [Route("[action]/{idSyncIdentifier}")]
         public async Task<ActionResult<Imagen>> Imagenes(Guid idSyncIdentifier, IEnumerable<Imagen> imagenes)
@@ -232,6 +233,7 @@ namespace SyncAPI.Controllers
             _context.SaveChangesAsync();
         }
 
+        [DisableRequestSizeLimit]
         [HttpGet]
         [Route("[action]/{idSyncIdentifier}")]
         public async Task<ActionResult<IEnumerable<Imagen>>> Imagenes(Guid idSyncIdentifier)
