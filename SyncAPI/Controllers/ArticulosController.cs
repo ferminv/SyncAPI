@@ -132,6 +132,12 @@ namespace SyncAPI.Controllers
             _context.SaveChangesAsync();
         }
 
+        private void EliminarArticulosSyncInicial(Guid idSyncIdentifier)
+        {
+            _context.Database.ExecuteSqlRaw("DELETE TOP(100) PERCENT FROM [ArticulosSyncInicial] WHERE IDSyncIdentifier = {0}", idSyncIdentifier);
+            _context.SaveChangesAsync();
+        }
+
         // GET: api/Articulos/Codigos/[Guid]idSyncIdentifier
         [HttpGet]
         [Route("[action]/{idSyncIdentifier}")]
@@ -241,6 +247,31 @@ namespace SyncAPI.Controllers
             var imagenes = await _context.Imagenes.Where(x => x.IDSyncIdentifier == idSyncIdentifier).ToListAsync();
 
             return Ok(imagenes);
+        }
+
+
+        //SYNC INICIAL
+
+        // POST: api/Articulos/MultiplesArticulosSyncInicial
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<ArticuloSyncInicial>> MultiplesArticulosSyncInicial(IEnumerable<ArticuloSyncInicial> articulosSyncInicial)
+        {
+            _context.ArticulosSyncInicial.AddRange(articulosSyncInicial);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: api/Articulos/MultiplesArticulosSyncInicial/[Guid]idSyncIdentifier
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<IEnumerable<Articulo>>> MultiplesArticulosSyncInicial(Guid idSyncIdentifier)
+        {
+            var articulos = await _context.ArticulosSyncInicial.Where(x => (x.IDSyncIdentifier == idSyncIdentifier)).ToListAsync();
+            EliminarArticulosSyncInicial(idSyncIdentifier);
+            return Ok(articulos); 
         }
     }
 }

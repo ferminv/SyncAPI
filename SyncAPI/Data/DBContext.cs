@@ -18,5 +18,6 @@ namespace SyncAPI.Data
         public DbSet<Precio> Precios { get; set; }
         public DbSet<Articulo> Articulos { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
+        public DbSet<ArticuloSyncInicial> ArticulosSyncInicial { get; set; }
     }
 }
