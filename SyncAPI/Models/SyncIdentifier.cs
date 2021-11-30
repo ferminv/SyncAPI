@@ -15,6 +15,9 @@ namespace SyncAPI.Models
         public ICollection<Articulo> Articulos { get; set; }
         public ICollection<Imagen> Imagenes { get; set; }
         public ICollection<ArticuloSyncInicial> ArticulosSyncInicial { get; set; }
+        public ICollection<TipoUnidad> TiposUnidad { get; set; }
+        public ICollection<Moneda> Monedas { get; set; }
+
 
     }
 }

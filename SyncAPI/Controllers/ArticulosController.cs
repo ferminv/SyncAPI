@@ -257,8 +257,10 @@ namespace SyncAPI.Controllers
         [Route("[action]")]
         public async Task<ActionResult<ArticuloSyncInicial>> MultiplesArticulosSyncInicial(IEnumerable<ArticuloSyncInicial> articulosSyncInicial)
         {
-            _context.ArticulosSyncInicial.AddRange(articulosSyncInicial);
+            var idSyncIdentifier = articulosSyncInicial.FirstOrDefault().IDSyncIdentifier;
+            EliminarArticulosSyncInicial(idSyncIdentifier);
 
+            _context.ArticulosSyncInicial.AddRange(articulosSyncInicial);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -272,6 +274,66 @@ namespace SyncAPI.Controllers
             var articulos = await _context.ArticulosSyncInicial.Where(x => (x.IDSyncIdentifier == idSyncIdentifier)).ToListAsync();
             EliminarArticulosSyncInicial(idSyncIdentifier);
             return Ok(articulos); 
+        }
+
+        // POST: api/Articulos/Unidades
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<TipoUnidad>> Unidades(IEnumerable<TipoUnidad> unidadesSyncInicial)
+        {
+            var idSyncIdentifier = unidadesSyncInicial.FirstOrDefault().IDSyncIdentifier;
+            EliminarUnidadesSyncInicial(idSyncIdentifier);
+
+            _context.TiposUnidad.AddRange(unidadesSyncInicial);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: api/Articulos/Unidades/[Guid]idSyncIdentifier
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<IEnumerable<TipoUnidad>>> Unidades(Guid idSyncIdentifier)
+        {
+            var unidades = await _context.TiposUnidad.Where(x => (x.IDSyncIdentifier == idSyncIdentifier)).ToListAsync();
+            EliminarUnidadesSyncInicial(idSyncIdentifier);
+            return Ok(unidades);
+        }
+
+        private void EliminarUnidadesSyncInicial(Guid idSyncIdentifier)
+        {
+            _context.Database.ExecuteSqlRaw("DELETE TOP(100) PERCENT FROM [TiposUnidad] WHERE IDSyncIdentifier = {0}", idSyncIdentifier);
+            _context.SaveChangesAsync();
+        }
+
+        // POST: api/Articulos/Monedas
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<Moneda>> Monedas(IEnumerable<Moneda> monedasSyncInicial)
+        {
+            var idSyncIdentifier = monedasSyncInicial.FirstOrDefault().IDSyncIdentifier;
+            EliminarMonedasSyncInicial(idSyncIdentifier);
+
+            _context.Monedas.AddRange(monedasSyncInicial);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: api/Articulos/Monedas/[Guid]idSyncIdentifier
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<IEnumerable<Moneda>>> Monedas(Guid idSyncIdentifier)
+        {
+            var monedas = await _context.Monedas.Where(x => (x.IDSyncIdentifier == idSyncIdentifier)).ToListAsync();
+            EliminarMonedasSyncInicial(idSyncIdentifier);
+            return Ok(monedas);
+        }
+
+        private void EliminarMonedasSyncInicial(Guid idSyncIdentifier)
+        {
+            _context.Database.ExecuteSqlRaw("DELETE TOP(100) PERCENT FROM [Monedas] WHERE IDSyncIdentifier = {0}", idSyncIdentifier);
+            _context.SaveChangesAsync();
         }
     }
 }

@@ -19,5 +19,7 @@ namespace SyncAPI.Data
         public DbSet<Articulo> Articulos { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
         public DbSet<ArticuloSyncInicial> ArticulosSyncInicial { get; set; }
+        public DbSet<TipoUnidad> TiposUnidad { get; set; }
+        public DbSet<Moneda> Monedas { get; set; }
     }
 }
