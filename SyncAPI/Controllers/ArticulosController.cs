@@ -167,12 +167,13 @@ namespace SyncAPI.Controllers
 
         //--------PRECIOS-------------------
 
-        // GET: api/Articulos/Precios/[Guid]idSyncIdentifier
+        // GET: api/Articulos/Precios/[Guid]idSyncIdentifier/[DateTime]ultimaFechaSincronizacionLocal
         [HttpGet]
         [Route("[action]/{idSyncIdentifier}/{ultimaFechaSincronizacionLocal}")]
         public async Task<ActionResult<IEnumerable<Precio>>> Precios(Guid idSyncIdentifier, DateTime ultimaFechaSincronizacionLocal)
         {
             var precios = await _context.Precios.Where(x => x.IDSyncIdentifier == idSyncIdentifier && x.FechaActualizacion >= ultimaFechaSincronizacionLocal).ToListAsync();
+
             return Ok(precios);
         }
 
@@ -199,10 +200,35 @@ namespace SyncAPI.Controllers
             var syncIdentifier = _context.SyncIdentifiers.Find(idSyncIdentifier);
             syncIdentifier.UltimaFechaActualizacion = DateTime.Today.Date;
 
-            _context.Precios.AddRange(precios);
-            await _context.SaveChangesAsync();
+            var subListasPrecios = DividirLista<Precio>(precios.ToList(), 1000);
+            foreach (var lista in subListasPrecios)
+            {
+                _context.Precios.AddRange(lista);
+                await _context.SaveChangesAsync();
+            }
 
             return Ok();
+        }
+
+        // GET: api/Articulos/CantidadPrecios/[Guid]idSyncIdentifier/[DateTime]ultimaFechaSincronizacionLocal
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}/{ultimaFechaSincronizacionLocal}")]
+        public async Task<ActionResult<Int32>> CantidadPrecios(Guid idSyncIdentifier, DateTime ultimaFechaSincronizacionLocal)
+        {
+            var cantidadPrecios = await _context.Precios.Where(x => x.IDSyncIdentifier == idSyncIdentifier && x.FechaActualizacion >= ultimaFechaSincronizacionLocal).CountAsync();
+
+            return Ok(cantidadPrecios);
+        }
+
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}/{ultimaFechaSincronizacionLocal}/{iteracion}/{cantidad}")]
+        public async Task<ActionResult<IEnumerable<Precio>>> PreciosParcial(Guid idSyncIdentifier, DateTime ultimaFechaSincronizacionLocal, Int32 iteracion, Int32 cantidad)
+        {
+            var precios = await _context.Precios.Where(x => x.IDSyncIdentifier == idSyncIdentifier && x.FechaActualizacion >= ultimaFechaSincronizacionLocal)
+                                                .Skip(iteracion * cantidad)
+                                                .Take(cantidad).ToListAsync();
+
+            return Ok(precios);
         }
 
         private void EliminarPrecios(Guid idSyncIdentifier, List<String> codigos)
@@ -226,9 +252,12 @@ namespace SyncAPI.Controllers
         {
             EliminarImagenes(idSyncIdentifier);
 
-            _context.Imagenes.AddRange(imagenes);
-
-            await _context.SaveChangesAsync();
+            var subListasImagenes = DividirLista<Imagen>(imagenes.ToList(), 1000);
+            foreach (var lista in subListasImagenes)
+            {
+                _context.Imagenes.AddRange(lista);
+                await _context.SaveChangesAsync();
+            }
 
             return Ok();
         }
@@ -251,28 +280,44 @@ namespace SyncAPI.Controllers
 
 
         //SYNC INICIAL
-
         // POST: api/Articulos/MultiplesArticulosSyncInicial
+        [DisableRequestSizeLimit]
         [HttpPost]
-        [Route("[action]")]
-        public async Task<ActionResult<ArticuloSyncInicial>> MultiplesArticulosSyncInicial(IEnumerable<ArticuloSyncInicial> articulosSyncInicial)
+        [Route("[action]/{primerPost}")]
+        public async Task<ActionResult<ArticuloSyncInicial>> MultiplesArticulosSyncInicial(IEnumerable<ArticuloSyncInicial> articulosSyncInicial, Boolean primerPost)
         {
             var idSyncIdentifier = articulosSyncInicial.FirstOrDefault().IDSyncIdentifier;
-            EliminarArticulosSyncInicial(idSyncIdentifier);
+            if (primerPost)
+                EliminarArticulosSyncInicial(idSyncIdentifier); //SI ES EL PRIMER POST ELIMINAMOS LOS QUE HABIA PARA CARGAR TODOS DE VUELTA
 
-            _context.ArticulosSyncInicial.AddRange(articulosSyncInicial);
-            await _context.SaveChangesAsync();
-
+            var subListasArticulos = DividirLista<ArticuloSyncInicial>(articulosSyncInicial.ToList(), 1000);
+            foreach (var lista in subListasArticulos)
+            {
+                _context.ArticulosSyncInicial.AddRange(lista);
+                await _context.SaveChangesAsync();
+            }
             return Ok();
+        }
+
+        // GET: api/Articulos/CantidadArticulosInicial/[Guid]idSyncIdentifier
+        [HttpGet]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<Int32>> CantidadArticulosInicial(Guid idSyncIdentifier)
+        {
+            var cantidadArticulos = await _context.ArticulosSyncInicial.Where(x => x.IDSyncIdentifier == idSyncIdentifier).CountAsync();
+            return Ok(cantidadArticulos);
         }
 
         // GET: api/Articulos/MultiplesArticulosSyncInicial/[Guid]idSyncIdentifier
         [HttpGet]
-        [Route("[action]/{idSyncIdentifier}")]
-        public async Task<ActionResult<IEnumerable<Articulo>>> MultiplesArticulosSyncInicial(Guid idSyncIdentifier)
+        [Route("[action]/{idSyncIdentifier}/{iteracion}/{cantidad}/{ultimoGet}")]
+        public async Task<ActionResult<IEnumerable<Articulo>>> MultiplesArticulosSyncInicial(Guid idSyncIdentifier, Int32 iteracion, Int32 cantidad, Boolean ultimoGet)
         {
-            var articulos = await _context.ArticulosSyncInicial.Where(x => (x.IDSyncIdentifier == idSyncIdentifier)).ToListAsync();
-            EliminarArticulosSyncInicial(idSyncIdentifier);
+            var articulos = await _context.ArticulosSyncInicial.Where(x => (x.IDSyncIdentifier == idSyncIdentifier))
+                                                .Skip(iteracion * cantidad)
+                                                .Take(cantidad).ToListAsync();
+            if (ultimoGet)
+                EliminarArticulosSyncInicial(idSyncIdentifier); //SI ES EL ULTIMO GET ELIMINAMOS TODOS PARA LIMPIAR LA BASE
             return Ok(articulos); 
         }
 
