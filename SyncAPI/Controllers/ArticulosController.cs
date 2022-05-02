@@ -107,6 +107,19 @@ namespace SyncAPI.Controllers
             return Ok(articulos); //devolvemos los articulos que el cliente no tiene en su bd (los nuevos)
         }
 
+        // EL GET DE ARRIBA HECHO CON POST PARA PODER ENVIAR LOS CODIGOS EN EL BODY
+        [HttpPost]
+        [Route("[action]/{idSyncIdentifier}")]
+        public async Task<ActionResult<IEnumerable<Articulo>>> GetMultiplesArticulos(Guid idSyncIdentifier, [FromBody]IEnumerable<String> codigos)
+        {
+            var articulos = new List<Articulo>();
+            var subListasCodigos = DividirLista<string>(codigos.ToList(), 2000); //POR SI SON MAS DE 2K POR EL CONTAINS
+            foreach (var subLista in subListasCodigos)
+                articulos.AddRange(await _context.Articulos.Where(x => (x.IDSyncIdentifier == idSyncIdentifier) && (subLista.Contains(x.CodigoPereira))).ToListAsync());
+
+            return Ok(articulos); //devolvemos los articulos que el cliente no tiene en su bd (los nuevos)
+        }
+
         // POST: api/Articulos/MultiplesArticulos
         [HttpPost]
         [Route("[action]")]
