@@ -210,15 +210,14 @@ namespace SyncAPI.Controllers
                 }
             }
 
+            var subListasPrecios = DividirLista<Precio>(precios.ToList(), 1000);
+            foreach (var lista in subListasPrecios)
+                _context.Precios.AddRange(lista);
+
             var syncIdentifier = _context.SyncIdentifiers.Find(idSyncIdentifier);
             syncIdentifier.UltimaFechaActualizacion = DateTime.Today.Date;
 
-            var subListasPrecios = DividirLista<Precio>(precios.ToList(), 1000);
-            foreach (var lista in subListasPrecios)
-            {
-                _context.Precios.AddRange(lista);
-                await _context.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
