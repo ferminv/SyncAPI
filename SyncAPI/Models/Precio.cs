@@ -9,8 +9,10 @@ namespace SyncAPI.Models
 {
     public class Precio
     {
-        public Int32 Id { get; set; } 
+        public Int32 Id { get; set; }
+        [Column(TypeName = "varchar(20)")]
         public String CodigoPereira { get; set; }
+        [Column(TypeName = "varchar(300)")]
         public String Descripcion { get; set; }
         [Column(TypeName = "decimal(18, 4)")]
         public Decimal PrecioCosto { get; set; }

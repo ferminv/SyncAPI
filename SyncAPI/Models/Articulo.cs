@@ -11,7 +11,9 @@ namespace SyncAPI.Models
         public Int32 Id { get; set; }
         public Int32 IDRubro { get; set; }
         public Boolean Activo { get; set; }
+        [Column(TypeName = "varchar(20)")]
         public String CodigoPereira { get; set; }
+        [Column(TypeName = "varchar(20)")]
         public String CodigoBarras { get; set; }
         public Decimal PrecioCosto { get; set; }
         public Decimal? PrecioUltimaCompra { get; set; }
@@ -35,16 +37,27 @@ namespace SyncAPI.Models
         public Decimal? Porcentaje8 { get; set; }
         public Decimal? Porcentaje9 { get; set; }
         public Decimal? Porcentaje10 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo01 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo02 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo03 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo04 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo05 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo06 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo07 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo08 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo09 { get; set; }
+        [Column(TypeName = "varchar(35)")]
         public String Codigo10 { get; set; }
+        [Column(TypeName = "varchar(300)")]
         public String Descripcion { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
         public Decimal PorcentajeIVA { get; set; }
