@@ -28,17 +28,10 @@ namespace SyncAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext"), sqlServerOptions => sqlServerOptions.CommandTimeout(300)));
+                                        
+            services.AddScoped<ISyncDataService, SyncDataService>();
 
-            //services.AddDbContext<ComITDBContext>((serviceProvider, dbContextBuilder) =>
-            //{
-            //    var connectionStringPlaceHolder = Configuration.GetConnectionString("ComITDBContext");
-            //    var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-            //    var connectionString = httpContextAccessor.HttpContext.Request.Headers["stringConnection"].First(); ;
-            //    dbContextBuilder.UseSqlServer(connectionString);
-            //});
-
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllers();
         }

@@ -15,95 +15,77 @@ namespace SyncAPI.Controllers
     public class SyncIdentifiersController : ControllerBase
     {
         private readonly DBContext _context;
+        private readonly ISyncDataService _svc;
 
-        public SyncIdentifiersController(DBContext context)
+        public SyncIdentifiersController(DBContext context, ISyncDataService svc)
         {
             _context = context;
+            _svc = svc;
         }
 
-        // GET: api/SyncIdentifiers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SyncIdentifier>>> GetSyncIdentifiers()
         {
             return await _context.SyncIdentifiers.ToListAsync();
         }
 
-        // GET: api/SyncIdentifiers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SyncIdentifier>> GetSyncIdentifier(Guid id)
         {
-            var syncIdentifier = await _context.SyncIdentifiers.FindAsync(id);
+            var syncIdentifier = await _svc.GetSyncIdentifier(id);
+
             if (syncIdentifier == null)
-            {
                 return NotFound();
-            }
 
             return syncIdentifier;
         }
 
         // PUT: api/SyncIdentifiers/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSyncIdentifier(Guid id, SyncIdentifier syncIdentifier)
         {
             if (id != syncIdentifier.Id)
-            {
                 return BadRequest();
-            }
-
-            _context.Entry(syncIdentifier).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _svc.UpdateSyncIdentifier(syncIdentifier);
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!SyncIdentifierExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
         }
 
-        // POST: api/SyncIdentifiers
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<SyncIdentifier>> PostSyncIdentifier(SyncIdentifier syncIdentifier)
+        public async Task<ActionResult<SyncIdentifier>> PostSyncIdentifier(SyncIdentifier syncIdentifier) //SI SE USA, TENER EN CUENTA QUE YA TIENE QUE VENIR CON UN GUID DE ID, SE PENSO PARA CREARLOS POR DB
         {
-            _context.SyncIdentifiers.Add(syncIdentifier);
-            await _context.SaveChangesAsync();
+            await _svc.AddSyncIdentifier(syncIdentifier);
 
             return CreatedAtAction("GetSyncIdentifier", new { id = syncIdentifier.Id }, syncIdentifier);
         }
 
-        // DELETE: api/SyncIdentifiers/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<SyncIdentifier>> DeleteSyncIdentifier(Guid id)
         {
-            var syncIdentifier = await _context.SyncIdentifiers.FindAsync(id);
-            if (syncIdentifier == null)
-            {
-                return NotFound();
-            }
+            var syncIdentifier = await _svc.GetSyncIdentifier(id);
 
-            _context.SyncIdentifiers.Remove(syncIdentifier);
-            await _context.SaveChangesAsync();
+            if (syncIdentifier == null)
+                return NotFound();
+
+            await _svc.RemoveSyncIdentifier(syncIdentifier);
 
             return syncIdentifier;
         }
 
         private bool SyncIdentifierExists(Guid id)
         {
-            return _context.SyncIdentifiers.Any(e => e.Id == id);
+            return _svc.SyncIdentifierExists(id);
         }
     }
 }

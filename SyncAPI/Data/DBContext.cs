@@ -11,7 +11,7 @@ namespace SyncAPI.Data
     {
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<SyncIdentifier> SyncIdentifiers { get; set; }
