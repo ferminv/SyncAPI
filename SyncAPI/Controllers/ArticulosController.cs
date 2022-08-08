@@ -130,7 +130,7 @@ namespace SyncAPI.Controllers
         [Route("[action]/{idSyncIdentifier}")]
         public async Task<ActionResult<IEnumerable<String>>> Codigos(Guid idSyncIdentifier)
         {
-            var codigosPrecios = await _svc.Articulos.GetCodigos(idSyncIdentifier);
+            var codigosPrecios = await _svc.Precios.GetCodigos(idSyncIdentifier);
             return Ok(codigosPrecios);
         }
 
@@ -166,8 +166,8 @@ namespace SyncAPI.Controllers
                 return BadRequest();
 
             //BORRO Y VUELVO A AGREGAR EN LUGAR DE MODIFICAR (PUT) PORQUE LA TABLA NO ESTA RELACIONADA CON OTRA, POR LO CUAL ES LO MISMO Y MAS RAPIDO
-            if (borrarPrevios)
-                await _svc.Precios.RemoveCollection((Guid)idSyncIdentifier, precios);
+            //if (borrarPrevios)
+            await _svc.Precios.RemoveCollection((Guid)idSyncIdentifier, precios);
 
             await _svc.Precios.AddCollection(precios);
 

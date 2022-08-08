@@ -42,8 +42,10 @@ namespace SyncAPI.Services
         {
             var subListasPrecios = HelpFuncs.DividirLista<Precio>(precios.ToList(), 1000);
             foreach (var lista in subListasPrecios)
+            {
                 _context.Precios.AddRange(lista);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task RemoveCollection(Guid idSyncIdentifier, IEnumerable<Precio> precios)

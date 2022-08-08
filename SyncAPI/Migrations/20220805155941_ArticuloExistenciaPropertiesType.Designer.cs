@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyncAPI.Data;
 
@@ -11,9 +12,10 @@ using SyncAPI.Data;
 namespace SyncAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20220805155941_ArticuloExistenciaPropertiesType")]
+    partial class ArticuloExistenciaPropertiesType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,13 +102,13 @@ namespace SyncAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("ExistenciaActual")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal?>("ExistenciaInicial")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal?>("ExistenciaMinima")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime?>("FechaExistenciaInicial")
                         .HasColumnType("datetime2");
@@ -223,49 +225,49 @@ namespace SyncAPI.Migrations
                         .HasColumnType("varchar(450)");
 
                     b.Property<decimal>("Precio01")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio02")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio03")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio04")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio05")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio06")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio07")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio08")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio09")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Precio10")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("PrecioCosto")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal?>("PrecioEnOtraMoneda")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("PrecioFranquicia")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("PrecioPromocionFranquicia")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("PrecioUltimaCompra")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("ReporteDefault")
                         .HasColumnType("varchar(500)");
@@ -274,7 +276,7 @@ namespace SyncAPI.Migrations
                         .HasColumnType("varchar(300)");
 
                     b.Property<decimal?>("UltimoPrecio")
-                        .HasColumnType("decimal(19,4)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Volumen")
                         .HasColumnType("decimal(18,2)");

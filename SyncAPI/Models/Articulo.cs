@@ -15,27 +15,49 @@ namespace SyncAPI.Models
         public String CodigoPereira { get; set; }
         [Column(TypeName = "varchar(20)")]
         public String CodigoBarras { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal PrecioCosto { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? PrecioUltimaCompra { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio01 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio02 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio03 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio04 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio05 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio06 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio07 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio08 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio09 { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal Precio10 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal PorcentajeMarcacion { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? PorcentajeMarcacionDos { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? PorcentajeMarcacionTres { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje4 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje5 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje6 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje7 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje8 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje9 { get; set; }
+        [Column(TypeName = "decimal(10, 4)")]
         public Decimal? Porcentaje10 { get; set; }
         [Column(TypeName = "varchar(35)")]
         public String Codigo01 { get; set; }
@@ -59,22 +81,26 @@ namespace SyncAPI.Models
         public String Codigo10 { get; set; }
         [Column(TypeName = "varchar(300)")]
         public String Descripcion { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column(TypeName = "decimal(10, 4)")]
+
         public Decimal PorcentajeIVA { get; set; }
         public DateTime? FechaUltimaCompra { get; set; }
         public DateTime? FechaExistenciaInicial { get; set; }
         public Int16? IDProveedorUltimaCompra { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? ExistenciaInicial { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? ExistenciaMinima { get; set; }
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? ExistenciaActual { get; set; }
         public String Observaciones { get; set; }
-        [Column(TypeName = "decimal(18, 4)")]
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? UltimoPrecio { get; set; }
         public Boolean? IsLista4 { get; set; }
         public Boolean isSubido { get; set; }
         public Boolean isDestacado { get; set; }
         public Int16? IDMoneda { get; set; }
-        [Column(TypeName = "decimal(18, 4)")]
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal? PrecioEnOtraMoneda { get; set; }
         public Boolean isRetornable { get; set; }
         public Boolean isGenerico { get; set; }
@@ -94,7 +120,7 @@ namespace SyncAPI.Models
         [Column(TypeName = "varchar(300)")]
         public String DescripcionFranquicia { get; set; }
         public Int32? IdArticuloTransformadoCC { get; set; }
-        [Column(TypeName = "decimal(18, 4)")]
+        [Column(TypeName = "decimal(19, 4)")]
         public Decimal PrecioFranquicia { get; set; }
         public Boolean isIntermedio { get; set; }
         public Int32? IdDeposito { get; set; }

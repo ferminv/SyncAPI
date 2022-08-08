@@ -32,8 +32,12 @@ namespace SyncAPI.Services
 
         public async Task AddCollection(IEnumerable<Articulo> articulos)
         {
-            _context.Articulos.AddRange(articulos);
-            await _context.SaveChangesAsync();
+            var subListasArticulos = HelpFuncs.DividirLista<Articulo>(articulos.ToList(), 1000);
+            foreach (var lista in subListasArticulos)
+            {
+                _context.Articulos.AddRange(lista);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task Update(Articulo articulo)
