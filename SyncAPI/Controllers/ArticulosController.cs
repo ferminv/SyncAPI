@@ -145,7 +145,7 @@ namespace SyncAPI.Controllers
             return Ok(codigosNuevos); //Retorna codigos de los articulos que no tiene localmente el cliente
         }
 
-        //--------PRECIOS-------------------
+        //--------PRECIOS------------------
 
         [HttpGet]
         [Route("[action]/{idSyncIdentifier}/{ultimaFechaSincronizacionLocal}")]
