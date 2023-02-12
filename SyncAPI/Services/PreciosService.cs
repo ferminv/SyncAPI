@@ -28,7 +28,6 @@ namespace SyncAPI.Services
             var precios = await _context.Precios.Where(x => x.IDSyncIdentifier == idSyncIdentifier && x.FechaActualizacion >= lastSyncDate)
                                     .Skip(iteracion * cantidad)
                                     .Take(cantidad).ToListAsync();
-
             return precios;
         }
 
